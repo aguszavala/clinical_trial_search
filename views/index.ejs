@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinical Trial Search</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <!-- Main Container -->
+    <div class="container my-5">
+
+        <!-- Header Section -->
+        <div class="text-center mb-4">
+            <h1 class="display-5">Find the Right Clinical Trial for You!</h1>
+            <p class="lead">Search for clinical trials based on your condition and location.</p>
+        </div>
+
+        <!-- Search Form Section -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <form method="post" class="row g-3">
+                    <div class="col-md-4">
+                        <label for="disease" class="form-label">Disease</label>
+                        <input type="text" class="form-control" name="disease" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="city" class="form-label">City</label>
+                        <input type="text" class="form-control" name="city" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="state" class="form-label">State</label>
+                        <input type="text" class="form-control" name="state" required>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary w-100" formaction="/search">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- Alert Box Section -->
+        <% if (locals.hasSearched && (!locals.studies || locals.studies.length===0)) {%>
+            <div class="alert alert-warning text-center" role="alert">
+                <h4>No studies have been found</h4>
+                <p>Please try searching with different criteria</p>
+            </div>
+            <% } %>
+                <!-- Results Summary Section -->
+                <div class="mb-4">
+                    <% if (locals.totalNumber) { %>
+                        <div class="alert alert-info text-center" role="alert">
+                            <% if (totalNumber===1) {%>
+                                <h4 class="alert-heading">We found <%= totalNumber %> study!</h4>
+                                <% } else {%>
+                                    <h4 class="alert-heading">We found <%= totalNumber %> studies!</h4>
+                                    <% } %>
+                                        <p>For the condition of <strong>
+                                                <%= condition %>
+                                            </strong> in <strong>
+                                                <%= location %>
+                                            </strong>.</p>
+                        </div>
+                        <% } %>
+                </div>
+
+                <!-- Study List Section -->
+                <% if (locals.studies && locals.studies.length> 0) { %>
+                    <h3 class="mb-3">Available Studies</h3>
+                    <div class="row">
+                        <% studies.forEach((study, index)=> { %>
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 shadow-sm d-flex flex-column">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title">
+                                            <%= study.protocolSection.identificationModule.briefTitle %>
+                                        </h5>
+                                        <div class="mt-auto">
+                                        <button class="btn btn-outline-primary trial" data-index="<%= index %>"
+                                            data-title="<%= study.protocolSection.identificationModule.briefTitle %>"
+                                            data-summary="<%= study.protocolSection.descriptionModule.briefSummary %>"
+                                            data-additional="<%= study.protocolSection.eligibilityModule.eligibilityCriteria %>"
+                                            <% if (study.protocolSection.contactsLocationsModule.centralContacts) { %>
+                                            data-contact="<%=
+                                                JSON.stringify(study.protocolSection.contactsLocationsModule.centralContacts)
+                                                %>
+                                                "
+                                                <% } %>>
+                                                    View Details
+                                        </button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                    </div>
+                    <% } %>
+
+    </div> <!-- End of Main Container -->
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay"></div>
+
+    <!-- Dialog Box -->
+    <div class="dialog-box" id="dialog">
+        <h3 id="dialogTitle">Study Details</h3>
+        <p id="dialogText"></p>
+        <div class="d-flex justify-content-between">
+          <div class="contact-buttons d-flex flex-wrap gap-2"></div>
+        </div>
+        <button class="btn btn-danger close">Close</button>
+    </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/frontend.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+/* Styles for the modal background overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: none;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    /* Grey background with opacity */
+
+    z-index: 999;
+    /* Ensure it is above all other elements */
+}
+
+.card-body .mt-auto {
+    margin-top: auto; /* Push content (like buttons) to the bottom */
+}
+
+
+/* Styles for the dialog box */
+.dialog-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    /* Adjust width as needed */
+    background: #fff;
+    /* White background */
+    padding: 20px;
+    display: none;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    /* Ensure it's above the modal overlay */
+}
+
+.dialog-box .contact {
+    background-color: #2E8B57;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.contact-buttons {
+    color: white;
+    border: none;
+}
+
+/* Close button styles */
+.dialog-box .close {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    /* padding: 10px 20px; */
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
