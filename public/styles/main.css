@@ -50,6 +50,14 @@
     margin-bottom: 0;
 }
 
+@media (max-width: 768px) {
+    .dialog-box {
+        width: 95%;
+        max-width: none;
+        max-height: 90%;
+    }
+}
+
 .contact-buttons {
     color: white;
     border: none;
