@@ -24,12 +24,15 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 900px;
+    width: 90%;
     /* Adjust width as needed */
     background: #fff;
     /* White background */
     padding: 20px;
+    max-width: 600px;
+    height: auto;
     display: none;
+    max-height: 80%;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
